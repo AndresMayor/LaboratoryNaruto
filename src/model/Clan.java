@@ -11,4 +11,19 @@ public class Clan {
 		
 	}
 
+
+
+	public Character getCharacters() {
+		return characters;
+	}
+
+
+
+	public void setCharacters(Character characters) {
+		this.characters = characters;
+	}
+
+	
+	
+	
 }

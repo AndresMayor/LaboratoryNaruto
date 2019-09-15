@@ -13,4 +13,25 @@ public class Technique {
 		this.factor = factor;
 	}
 
+
+	public String getNameTec() {
+		return nameTec;
+	}
+
+
+	public void setNameTec(String nameTec) {
+		this.nameTec = nameTec;
+	}
+
+
+	public double getFactor() {
+		return factor;
+	}
+
+
+	public void setFactor(double factor) {
+		this.factor = factor;
+	}
+	
+
 }
