@@ -6,6 +6,9 @@ public class Technique {
 	private String nameTec;
 	private double factor;
 	
+	//Relation
+	private Technique next;
+	
 	
 	public Technique(String nameTec, double factor) {
 		
@@ -27,11 +30,28 @@ public class Technique {
 	public double getFactor() {
 		return factor;
 	}
+	
+
+	public Technique getNext() {
+		return next;
+	}
+
+
+	public void setNext(Technique next) {
+		this.next = next;
+	}
 
 
 	public void setFactor(double factor) {
 		this.factor = factor;
 	}
+	public void changeNext (Technique technique) {
+		next=technique;
+		
+	}
+	
+	
+	
 	
 
 }
