@@ -16,9 +16,9 @@ public class Game {
 	public static final String ARCHIVE ="datas.txt";
 	
 	
-	public Game() {
+	public Game() throws ClassNotFoundException, IOException {
 		clans = new ArrayList<Clan>();
-		
+		loadData();
 		
 		
 		
@@ -34,105 +34,393 @@ public class Game {
 		this.clans = clans;
 	}
 	
+	//Add tecnica
 	
-	
-	public void  addClan (Clan clan1) throws EqualName {
-		if (equalNameCLans(clan1) == false) {
-			clans.add(clan1);
+	public boolean addTechnique(String nameClan,String nameCharacter,Technique tecnica ) throws SameObject, IOException {
+		boolean encont =  false;
+		
+		for (int i =0;i<clans.size() && !encont;i++) {
 			
+			if (clans.get(i).getName().equals(nameClan)) {
+				
+				clans.get(i).addTecnique(nameCharacter, tecnica);
+				encont=true;
+				editarArchive();
+			}else {
+				throw new SameObject("The Clan "+ nameCharacter + " does not exist!!");
+			}
 			
-		}else {
-		   throw new EqualName();
 		}
 		
+		
+		
+		return encont;
+		
+		
+	}
+	
+	
+	public void orderCharacterPower() throws SameObject {
+		for (int i = 0; i < clans.size(); i++) {
+			clans.get(i).orderCharacter();
+			
+		}
 	}
 	
 	
 	
 	
-public boolean  equalNameCLans (Clan clan1) {
+	
+	public void  addClan (Clan clan1) throws EqualName, SameObject, IOException {
+		
+			
+				if (equalNameCLans(clan1.getName()) == false) {
+					clans.add(clan1);
+					editarArchive();
+					
+				}
+				else {
+				   throw new EqualName();
+				}
+			} 
+		
+		
+	
+	
+	
+	
+	
+public boolean  equalNameCLans (String nameClan) throws SameObject {
 		boolean centinela = false;
 		
 		for(int i = 0;i<clans.size() && !centinela;i++) {
-			if(clans.get(i).getName().equals(clan1.getName())) {
+			if(clans.get(i).getName().equals(nameClan)) {
 				centinela = true;
-			}
-			else if (clans.get(i).getName() != clan1.getName()) {
-				centinela =false;
+				String msg = "There is already a clan  with that name!";
+				throw new SameObject(msg);
 				
 			}
+			
 		}
 		return centinela ;
 		
 	}
 
 
-
-public void addCharacter(String name,Character1 character) {
+public boolean addCharacter(String name,Character1 character) throws SameObject, IOException {
 	boolean encont =  false;
+	
+	if (!equalCharacter(character)) {
 	for (int i =0;i<clans.size() && !encont;i++) {
+		
 		if (clans.get(i).getName().equals(name)) {
+			
 			clans.get(i).addCharacter(character);
+			editarArchive();
 			encont=true;
+			
 		}
 		
 	}
 	
 	
+	}
+	return encont;
+	
+	
 }
+
+public boolean equalCharacter(Character1 character) throws SameObject {
+	boolean encont =false;
+	
+	for (int i =0;i<clans.size()&& !encont;i++) {
+		if(clans.get(i).equalNameCharacter(character.getName())) {
+			encont=true;
+			String msg = "There is already a character with that name!";
+			throw new SameObject(msg);
+		}
+	}
+	return encont ;
+}
+
 //Actualizar Name del clan
 
-	public boolean updateNameClan(String nameClan, String newName) {
+	public boolean updateNameClan(String nameClan, String newName) throws SameObject, IOException {
 		boolean encont =false;
+		if(!equalNameCLans(newName)) {
+			
+		
 		for (int i =0;i<clans.size() && !encont ;i++) {
 			if (clans.get(i).getName().equals(nameClan)) {
 				clans.get(i).setName(newName);
 				encont=true;
+				editarArchive();
+				
 			}
+		}
 		}
 		
 		return encont;
 		
 	}
 
+	//Responsabilidad de Actualizar nombre del personaje 
+	public boolean updateNameCharacter(String nameClan,String newName,String nameCharacter) throws IOException {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updateNameCharacter(nameCharacter, newName);
+				editarArchive();
+				centinela = true;
+			}
+		}
+		return centinela ;
+	}
+	
+	//Responsabilidad de Actualizar personalidad del  personaje 
+	public boolean updatePersonalityCharacter(String nameClan,String namePersonality ,String nameCharacter) throws IOException {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updatePersonalityCharacter(nameCharacter, namePersonality);
+				centinela = true;
+				editarArchive();
+			}
+		}
+		return centinela ;
+	}
+	
+	//Responsabilidad de Actualizar fecha de nacimiento  del  personaje 
+	
+	public boolean updatecrationDateCharacter(String nameClan,String namePersonality ,String nameCharacter) throws IOException {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updateCreationDateCharacter(nameCharacter, namePersonality);
+				centinela = true;
+				editarArchive();
+			}
+		}
+		return centinela ;
+	}
+	
+	//Responsabilidad de Actualizar el poder  del  personaje 
+	
+	public boolean updatePowerCharacter(String nameClan,double newPower ,String nameCharacter) throws IOException {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updatePowerCharacter(nameCharacter, newPower);
+				centinela = true;
+				editarArchive();
+			}
+		}
+		return centinela ;
+	}
+	
+	
+	
+	//FALTA CONECTARLO AL MAIN
+	
+	
+	//Actualiza el el factor de la tecnica 
+	public boolean updateFactorTeccCharacter(String nameClan,double newFactor ,String nameCharacter,String nameTec) {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updateFactorCharacter(nameCharacter, newFactor, nameTec);
+				centinela = true;
+			}
+		}
+		return centinela ;
+	}
+	
 
+	//FALTA CONECTARLO AL MAIN
+	
+	//Responsabilidad para cambiar el nombre de la Tecnica 
+
+	
+	public boolean updateNameTeccCharacter(String nameClan,String newNameTec ,String nameCharacter,String nameTec) {
+		boolean centinela = false;
+		for (int i =0;i< clans.size() && !centinela;i++) {
+			if (clans.get(i).getName().equals(nameClan)) {
+				centinela = clans.get(i).updateNameTecCharacter(nameCharacter, newNameTec, nameTec);
+				centinela = true;
+			}
+		}
+		return centinela ;
+	}
+	
+	
+	// METODOS PARA ELIMINAR 
+	
+			public boolean eliminateClan(String clan) throws SameObject {
+				boolean eliminado = false;
+				for (int i = 0;i<clans.size() && !eliminado ; i++) {
+					if(clans.get(i).getName().equals(clan)) {
+						clans.remove(i);
+						eliminado = true;
+					}
+					else {
+						String msg = "Clan name does not exist try again!!";
+						throw new SameObject(msg);	
+					}
+				}
+				return eliminado;
+				
+			}
+	
+	//Eliminate character 
+			
+			public boolean deleteCharacter(String nameClan,String nameCharacter) throws SameObject {
+				boolean finded = false;
+				for (int i =0;i<clans.size() && !finded ; i++) {
+					if (clans.get(i).getName().equals(nameClan)) {
+						clans.get(i).eliminateCharacter(nameCharacter);
+						finded = true;
+					}
+				}
+				return finded;
+			}
+		//Eliminate Tecnique 
+			
+			public boolean eliminateTec(String nameClan,String nameCharacter ,String nameTec) throws SameObject {
+				boolean centinela = false;
+				for (int i =0;i< clans.size() && !centinela;i++) {
+					if (clans.get(i).getName().equals(nameClan)) {
+						centinela = clans.get(i).eliminateTec(nameCharacter, nameTec);
+						centinela = true;
+					}
+				}
+				return centinela ;
+			}
+	
+			
+			
+			
+			
+			
+			
+			@Override
+			public String toString() {
+				return "Game [clans=" + clans + "]";
+			}
+
+			public boolean  searchClan (String nameClan) throws SameObject {
+				boolean centinela = false;
+			
+				
+				for (int i =0;i< clans.size() && !centinela;i++) {
+					if (clans.get(i).getName().equals(nameClan)) {
+						 System.out.println(clans.get(i).toString());
+						centinela=true;
+					}else {
+						throw new SameObject("The clan: "+nameClan+" does not exist");
+					}
+				}
+				return centinela;
+			}
+	//Responsabilidad para buscar personaje 
+			public boolean  searchCharacter (String nameClan,String nameCharacter) throws SameObject {
+				boolean centinela = false;
+			
+				
+				for (int i =0;i< clans.size() && !centinela;i++) {
+					if (clans.get(i).getName().equals(nameClan)) {
+						clans.get(i).searchCharacter(nameCharacter);
+						centinela=true;
+					}else {
+						throw new SameObject("The clan: "+nameClan+" does not exist");
+					}
+				}
+				return centinela;
+			}
+			
+			//Responsabilidad para buscar tecnica 
+			public boolean  searchTec (String nameClan,String nameCharacter,String nameTec) throws SameObject {
+				boolean centinela = false;
+			
+				
+				for (int i =0;i< clans.size() && !centinela;i++) {
+					if (clans.get(i).getName().equals(nameClan)) {
+						clans.get(i).searchTecnique(nameCharacter, nameTec);
+						centinela=true;
+					}else {
+						throw new SameObject("The clan: "+nameClan+" does not exist");
+					}
+				}
+				return centinela;
+			}
+
+	
+	//Metodo para Ordenar 
+	public void orderClansNames() {
+		for (int i = 0; i < clans.size()-1; i++) {
+			Clan menor = clans.get(i);
+			int cual = i;
+			for (int j = i+1; j < clans.size(); j++) {
+				if(clans.get(j).compareName(menor)<0) {
+					menor = clans.get(j);
+					cual = j;
+				}
+				
+			}
+			Clan tmp = clans.get(i);
+			clans.set(i, menor);
+			clans.set(cual, tmp);
+		}
+	}
+	public boolean  clans() {
+		boolean finded =false ;
+		for (int i=0;i<clans.size();i++) {
+			System.out.println(clans.get(i).toString());
+			finded =true ;
+		}
+		return finded;
+	}
+	
 	public void loadData() throws IOException, ClassNotFoundException {
 		try {
-			File file = new File(ARCHIVE);
-			ObjectInputStream object = new ObjectInputStream(new FileInputStream(file));
-			try {
-				Clan clan = (Clan)object.readObject();
-				while(clan!=null) {
-					clans.add(clan);
-					clan=(Clan)object.readObject();
-					System.out.println(clan.getName());
-				}
-				object.close();
-			}catch(IOException e) {
-				object.close();	
-			}
+			File f = new File(ARCHIVE);
+			ObjectInputStream o = new ObjectInputStream(new FileInputStream(f));
+			clans = (ArrayList<Clan>)o.readObject();
+			o.close();
 		}catch(EOFException e) {
-				
-		}
 			
-	}
-	
-	public void edit() throws IOException {
-		new File (ARCHIVE).delete();
-		new File (ARCHIVE).createNewFile();
-		File filee = new File(ARCHIVE);
-		ObjectOutputStream object = new ObjectOutputStream(new FileOutputStream(filee));
-		for (int i =0;i<clans.size();i++) {
-			object.writeObject(clans.get(i));
 		}
-		object.close();
 	}
 	
-	public void init () {
+	public void editarArchive() throws IOException {
+		File f = new File(ARCHIVE);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+		oos.writeObject(clans);
+		oos.close();
+	}
+	
+	
+	
+	public void init () throws IOException {
 		Clan clan = new Clan("The Laker");
-		Clan clan1 = new Clan("The Lakr");
+		Clan clan1 = new Clan("-");
+		Character1 lopita = new Character1("Andres","Fuerte","2018/02/20", 400 );
 		clans.add(clan);
 		clans.add(clan1);
+		Technique tec = new Technique("lupito",40);
+		//addTechnique(String nameClan,String nameCharacter,Technique tecnica 
+		try {
+			addTechnique("The Laker","Andres",tec);
+		} catch (SameObject e1) {
+			
+			e1.getMessage();
+		}
+		try {
+			addCharacter("The Laker", lopita);
+		} catch (SameObject e) {
+		
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

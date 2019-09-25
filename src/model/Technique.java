@@ -1,6 +1,8 @@
 package model;
 
-public class Technique {
+import java.io.Serializable;
+
+public class Technique implements Serializable {
 	
 	
 	private String nameTec;
@@ -50,6 +52,17 @@ public class Technique {
 		
 	}
 	
+	public void desconectarSiguiente( ) {
+		next = next.next; }
+
+
+	@Override
+	public String toString() {
+		return "Technique [nameTec=" + nameTec + ", factor=" + factor + ", next=" + next + "]";
+	}
+	
+	
+
 	
 	
 	
