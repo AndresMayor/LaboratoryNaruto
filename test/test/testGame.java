@@ -31,11 +31,9 @@ class testGame {
 		try {
 			setupEscenario();	
 				Clan clan1 = new Clan("The Lakers");
-					try {
-						game.addClan(clan1);
-					} catch (IOException e) {
 					
-					}
+						game.addClan(clan1);
+					
 			}
 		catch (EqualName e) {	
 			e.getMessage();
@@ -49,12 +47,10 @@ class testGame {
 	public void testEqualNAme() throws EqualName {
 		setupEscenario();
 			Clan clan1 = new Clan("Albert");
-				try {
+				
 					try {
 						game.addClan(clan1);
-					} catch (IOException e) {
-						
-					}
+					
 				} catch (SameObject e) {
 					e.getMessage();
 					
@@ -74,12 +70,10 @@ class testGame {
 		setupEscenario();
 		Clan clan2 = new Clan("Albert");
 		
-			try {
+			
 				try {
 					game.addClan(clan2);
-				} catch (IOException e) {
-					
-				}
+				
 			} catch (EqualName e) {
 				
 				e.getMessage();

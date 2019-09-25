@@ -72,7 +72,11 @@ public class Main {
 		
 		case(3):
 			
-			eliminateObject();
+			try {
+				eliminateObject();
+			} catch (IOException e) {
+				
+			}
 		
 		break;
 		
@@ -107,18 +111,19 @@ public class Main {
 			Clan clan1 = new Clan(name);
 			
 			try {
-				try {
+				
 					user.addClan(clan1);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 				System.out.println("The clan was successfully added");
 				
 			} catch (EqualName e) {	
 			System.out.println(	e.getMessage());
-			}
 			
+			}
+			for (int i = 0; i <user.getClans().size(); i++) {
+				System.out.println(user.getClans().get(i).toString());
+			
+			}
 		}
 		else if(options==2) {
 			//String name, String personality, String creationDate, double power, double score)
@@ -138,12 +143,7 @@ public class Main {
 		
 		Character1 character = new Character1(nameCharacter,personality,crationDate,power);
 		try {
-			try {
-				System.out.println( user.addCharacter(nameClan, character));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.getMessage();
-			}
+			System.out.println( user.addCharacter(nameClan, character));
 		} catch (SameObject e) {
 			
 			System.out.println(e.getMessage());
@@ -173,11 +173,7 @@ public class Main {
 			Technique tecnica = new Technique (nameTec,factor);
 			
 			
-			try {
-				System.out.println(user.addTechnique(nameClan, nameCharacter, tecnica));
-			} catch (IOException e) {
-			
-			}
+			System.out.println(user.addTechnique(nameClan, nameCharacter, tecnica));
 			
 			
 			
@@ -233,11 +229,7 @@ public class Main {
 			String nameCharacter = reader.nextLine();
 			System.out.println("Please enter the new character name: ");
 			String newNameCharacter = reader.nextLine();
-			try {
-				System.out.println(user.updateNameCharacter(nameClan, newNameCharacter, nameCharacter));
-			} catch (IOException e) {
-				
-			}
+			System.out.println(user.updateNameCharacter(nameClan, newNameCharacter, nameCharacter));
 			
 			
 		}else if (option==2) {
@@ -309,7 +301,11 @@ public class Main {
 		System.out.println("enter the new technique name: ");
 		String newNameTec = reader.nextLine();
 		
-		System.out.println(user.updateNameTeccCharacter(nameClan, newNameTec, nameCharacter, nameTec));
+		try {
+			System.out.println(user.updateNameTeccCharacter(nameClan, newNameTec, nameCharacter, nameTec));
+		} catch (IOException e) {
+			
+		}
 	}else if (optionss ==2 ) {
 		System.out.println("Enter the name of the clan to which the character belongs: ");
 		String nameClan = reader.nextLine();
@@ -320,7 +316,11 @@ public class Main {
 		System.out.println("enter the new technique FACTOR: ");
 		String newFactor = reader.nextLine();
 		
-		System.out.println(user.updateNameTeccCharacter(nameClan, newFactor, nameCharacter, nameTec));
+		try {
+			System.out.println(user.updateNameTeccCharacter(nameClan, newFactor, nameCharacter, nameTec));
+		} catch (IOException e) {
+			
+		}
 	}
 	}
 		
@@ -329,7 +329,7 @@ public class Main {
 	
 	
 	
-	public void eliminateObject() {
+	public void eliminateObject() throws IOException {
 		System.out.println("Select the Object you want to delate: ");
 		System.out.println( "1.Clan ");
 		System.out.println( "2.Character ");
@@ -339,19 +339,28 @@ public class Main {
 		if (options ==1) {
 			System.out.println("Enter the name of the clan you want to delete: ");
 			String nameClan= reader.nextLine();
-			try {
-				System.out.println(user.eliminateClan(nameClan));
-			} catch (SameObject e) {
+			
+			
+					System.out.println(user.eliminateClan(nameClan));
 				
-				System.out.println(e.getMessage());
-			}
-		}else if(options ==2) {
+					
+				
+			
+				
+				
+			
+		}
+			else if(options ==2) {
 			System.out.println("Enter the name of the clan to which the character belongs");
 			String nameClan = reader.nextLine();
 			System.out.println("Enter the name if the character you want to delete");
 			String nameCharacter=reader.nextLine();
 			try {
-				System.out.println(user.deleteCharacter(nameClan, nameCharacter));
+				try {
+					System.out.println(user.deleteCharacter(nameClan, nameCharacter));
+				} catch (IOException e) {
+				
+				}
 			} catch (SameObject e) {
 				
 				System.out.println(e.getMessage());
@@ -366,7 +375,11 @@ public class Main {
 			String nameTec = reader.nextLine();
 			
 			try {
-				System.out.println(user.eliminateTec(nameClan, nameCgaracter, nameTec));
+				try {
+					System.out.println(user.eliminateTec(nameClan, nameCgaracter, nameTec));
+				} catch (IOException e) {
+					
+				}
 			} catch (SameObject e) {
 				
 				System.out.println(e.getMessage());
@@ -388,12 +401,12 @@ public class Main {
 		if (options==1) {
 			System.out.println("Enter clan name:");
 			String nameClan = reader.nextLine();
-			try {
+			
 				System.out.println(user.searchClan(nameClan));
-			} catch (SameObject e) {
 				
-				System.out.println(e.getMessage());
-			}
+			
+				
+			
 			
 		}else if (options ==2) {
 			System.out.println("Enter the name of the clan to which the character belongs: ");
@@ -447,7 +460,7 @@ public class Main {
 					user.orderCharacterPower();
 				} catch (SameObject e) {
 					
-					e.printStackTrace();
+				
 				}
 			
 			for (int i = 0; i < user.getClans().size(); i++) {
