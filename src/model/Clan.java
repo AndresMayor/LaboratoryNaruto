@@ -57,8 +57,6 @@ public class Clan implements Serializable {
 		}if (actual != null) {
 			actual.addTechniques(tecnique);
 			finded =true;
-		}else {
-			throw new SameObject("The Chraracter "+ nameCharacter + " does not exist!!");
 		}
 		return finded;
 	}
@@ -309,8 +307,6 @@ public class Clan implements Serializable {
 		System.out.println(actual.toString());
 		finded=true;
 		
-		}else {
-			throw new SameObject("The Chraracter "+ nameCharacter + " does not exist!!" );
 		}
 		return finded;
 	}
@@ -331,8 +327,6 @@ public class Clan implements Serializable {
 		actual.searchTechnique(nameTec);
 		finded=true;
 		
-		}else {
-			throw new SameObject("The Chraracter "+ nameCharacter + " does not exist, then the technique either!!" );
 		}
 		return finded;
 	}

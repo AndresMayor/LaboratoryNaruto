@@ -257,9 +257,7 @@ public class Character1 implements Comparator<Character1>, Comparable<Character1
 		System.out.println(actual.toString());
 		finded=true;
 		}
-		else {
-			throw new SameObject("The technique  "+ nameTec + " does not exist!!" );
-		}
+		
 		
 		return finded;
 	}
